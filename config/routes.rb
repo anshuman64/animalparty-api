@@ -10,6 +10,12 @@ Rails.application.routes.draw do
     post   'users',                    to: 'users#create_user'
     put    'users',                    to: 'users#edit_user'
 
+
+    # 'Users' routes
+    get    'connections',              to: 'connections#find_connection'
+    post   'connections',              to: 'connections#request_connection'
+    # del    'connections',              to: 'connections#delete_connection'
+
     # 'Blocks' routes
     get    'blocks',                   to: 'blocks#get_blocked_users'
     post   'blocks',                   to: 'blocks#create_block'

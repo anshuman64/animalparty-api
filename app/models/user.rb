@@ -9,10 +9,10 @@ class User < ApplicationRecord
   # has_many(:blockers, through: :blocks_as_blockee, source: :blocker)
   # has_many(:blockees, through: :blocks_as_blocker, source: :blockee)
   #
-  # has_many(:friendships_as_requester, class_name: :Friendship, foreign_key: :requester_id, primary_key: :id, dependent: :destroy)
-  # has_many(:friendships_as_requestee, class_name: :Friendship, foreign_key: :requestee_id, primary_key: :id, dependent: :destroy)
-  # has_many(:friends_as_requester, through: :friendships_as_requester, source: :requestee)
-  # has_many(:friends_as_requestee, through: :friendships_as_requestee, source: :requester)
+  has_many(:connections_as_blue, class_name: :Connection, foreign_key: :blue_id, primary_key: :id, dependent: :destroy)
+  has_many(:connections_as_red, class_name: :Connection, foreign_key: :red_id, primary_key: :id, dependent: :destroy)
+  has_many(:reds_as_blue, through: :connections_as_blue, source: :red)
+  has_many(:blues_as_requestee, through: :connections_as_red, source: :blue)
   #
   # has_many(:messages, class_name: :Message, foreign_key: :author_id, primary_key: :id, dependent: :destroy)
   #
