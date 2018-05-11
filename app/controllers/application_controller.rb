@@ -1,11 +1,9 @@
 require 'firebase_token_verifier'
 require 'one_signal'
-require 'twilio-ruby'
 
 class ApplicationController < ActionController::API
   FIREBASE_PROJECT_ID = 'animalparty-mobile'
 
-  @@twilio_client = Twilio::REST::Client.new(ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_AUTH_TOKEN"])
   @@verifier = FirebaseTokenVerifier.new(FIREBASE_PROJECT_ID)
 
   def decode_token(firebase_jwt)
@@ -39,7 +37,7 @@ class ApplicationController < ActionController::API
   # TODO: make this better for group messaging
   def create_notification(client_id, recipient_id, title, message, data)
     params = {
-      app_id: ENV["ONE_SIGNAL_APP_ID"],
+      app_id: ENV["ANIMALPARTY_ONE_SIGNAL_APP_ID"],
       contents: { en: message },
       ios_badgeType: 'Increase',
       ios_badgeCount: 1,
@@ -52,7 +50,7 @@ class ApplicationController < ActionController::API
     }
 
     begin
-      response = OneSignal::Notification.create(params: params, opts: { auth_key: ENV["ONE_SIGNAL_AUTH_KEY"] })
+      response = OneSignal::Notification.create(params: params, opts: { auth_key: ENV["ANIMALPARTY_ONE_SIGNAL_AUTH_KEY"] })
       notification_id = JSON.parse(response.body)["id"]
     rescue OneSignal::OneSignalError => e
       puts "--- OneSignalError  :"
@@ -60,73 +58,6 @@ class ApplicationController < ActionController::API
       puts "-- status : #{e.http_status}"
       puts "-- body : #{e.http_body}"
     end
-  end
-
-  def send_twilio_sms(phone_number, message)
-    begin
-      # Debug Test: uncomment for production
-      message = @@twilio_client.messages.create(
-        body: message,
-        to:   phone_number,
-        from: "+14088831259"
-      )
-    rescue Twilio::REST::RestError => e
-      puts e.message
-    end
-  end
-
-  def get_sms_start_string(client)
-    if client[:full_name]
-      return "Your friend " + client[:full_name]
-    elsif client[:username]
-      return "User \"" + client[:username] + "\""
-    else
-      return "Someone"
-    end
-  end
-
-  def find_or_create_contact_user(client_id, phone_number)
-    def create_friendship(client_id, user)
-      friendship = Friendship.new({ requester_id: client_id, requestee_id: user.id, status: 'ACCEPTED' })
-
-      if friendship.save
-        return user, nil
-      else
-        return nil, friendship.errors.full_messages
-      end
-    end
-
-    user = User.find_by_phone_number(phone_number)
-    if user
-      friendship = Friendship.find_by_requester_id_and_requestee_id(client_id, user.id)
-      if friendship
-        return user, nil
-      else
-        create_friendship(client_id, user)
-      end
-    else
-      user = User.new({ phone_number: phone_number })
-      if user.save
-        create_friendship(client_id, user)
-      else
-        return nil, user.errors.full_messages
-      end
-    end
-  end
-
-  def send_pusher_group_to_grouplings(group, exempt_user_ids, pusher_type, client)
-    pusher_group = group.as_json
-
-    group.groupling_users.where('user_id NOT IN (?) and firebase_uid IS NOT NULL', exempt_user_ids).each do |user|
-      pusher_group[:users] = group.groupling_users.where('user_id != ?', user.id).as_json
-      Pusher.trigger('private-' + user.id.to_s, pusher_type, { group: pusher_group })
-
-      if pusher_type == 'receive-group'
-        create_notification(client.id, user.id, nil, client.username + ' added you to a group.', { type: pusher_type })
-      end
-    end
-
-    return pusher_group
   end
 
   def get_pusher_message(message, client_id)
