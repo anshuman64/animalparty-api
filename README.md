@@ -11,8 +11,6 @@ export ONE_SIGNAL_APP_ID="Ask Anshuman for the key"
 export ONE_SIGNAL_AUTH_KEY="Ask Anshuman for the key"
 export PUSHER_KEY="Ask Anshuman for the key"
 export PUSHER_SECRET="Ask Anshuman for the key"
-export TWILIO_ACCOUNT_SID="Ask Anshuman for the key"
-export TWILIO_AUTH_TOKEN="Ask Anshuman for the key"
 ````
 
 ## Release
