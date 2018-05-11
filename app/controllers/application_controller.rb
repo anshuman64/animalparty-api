@@ -3,7 +3,7 @@ require 'one_signal'
 require 'twilio-ruby'
 
 class ApplicationController < ActionController::API
-  FIREBASE_PROJECT_ID = 'insiya-mobile'
+  FIREBASE_PROJECT_ID = 'animalparty-mobile'
 
   @@twilio_client = Twilio::REST::Client.new(ENV["TWILIO_ACCOUNT_SID"], ENV["TWILIO_AUTH_TOKEN"])
   @@verifier = FirebaseTokenVerifier.new(FIREBASE_PROJECT_ID)

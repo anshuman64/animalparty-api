@@ -40,7 +40,7 @@ class Api::UsersController < ApplicationController
 
       if @client.save
         # Debug Test: uncomment for production
-        share = Share.new({ post_id: 151, recipient_id: @client.id }) # 151 is a hard-coded number for 'Welcome to Postcard!' post from contact@insiya.io account
+        share = Share.new({ post_id: 151, recipient_id: @client.id }) # 151 is a hard-coded number for 'Welcome to Postcard!' post from contact@animalparty.io account
 
         unless share.save
           render json: share.errors.full_messages, status: 422 and return
