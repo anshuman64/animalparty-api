@@ -26,7 +26,7 @@ class Api::ConnectionsController < ApplicationController
     end
 
     # Find the user from opposite political_party who joined the queue first
-    user = User.where('political_party = ? and queued_at IS NOT NULL', opposite_party).order(:queued_at).last
+    user = User.where('political_party = ? and queued_at IS NOT NULL and id NOT IN (?) and id NOT IN (?)', opposite_party, client.reds_as_blue.ids, client.blues_as_red.ids).order(:queued_at).last
 
     # If the queue is not empty...
     if user

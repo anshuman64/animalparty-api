@@ -7,6 +7,11 @@ class Connection < ApplicationRecord
 
   has_many(:messages, class_name: :Message, foreign_key: :connection_id, primary_key: :id, dependent: :destroy)
 
+
+  def self.find_connection(user1_id, user2_id)
+    Connection.find_by_blue_id_and_red_id(user1_id, user2_id) || Friendship.find_by_red_id_and_blue_id(user2_id, user1_id)
+  end
+
   def self.query_connections(user)
     connections = user.reds_as_blue | user.blues_as_red
 

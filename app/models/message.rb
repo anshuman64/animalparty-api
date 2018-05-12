@@ -10,7 +10,7 @@ class Message < ApplicationRecord
   has_one(:medium, class_name: :Medium, foreign_key: :message_id, primary_key: :id, dependent: :destroy)
 
   def self.query_direct_messages(limit, start_at, client_id, user_id)
-    connection = Connection.find_connection_by_blue_id_and_red_id(client_id, user_id)
+    connection = Connection.find_connection(client_id, user_id)
 
     unless connection
       return []
@@ -26,7 +26,7 @@ class Message < ApplicationRecord
 
 
   def self.query_new_direct_messages(start_at, client_id, user_id)
-    connection = Connection.find_connection_by_blue_id_and_red_id(client_id, user_id)
+    connection = Connection.find_connection(client_id, user_id)
 
     unless connection
       return []
