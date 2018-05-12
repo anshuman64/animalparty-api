@@ -43,6 +43,8 @@ class Api::ConnectionsController < ApplicationController
 
       # And remove the user from the queue
       if connection.save && user.update({ queued_at: nil })
+        Pusher.trigger('private-' + params[:user_id].to_s, 'receive-connection', { client:  @client })
+
         render 'api/users/show' and return
       else
         render json: connection.errors.full_messages, status: 422 and return

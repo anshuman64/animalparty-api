@@ -9,7 +9,7 @@ class Connection < ApplicationRecord
 
 
   def self.find_connection(user1_id, user2_id)
-    Connection.find_by_blue_id_and_red_id(user1_id, user2_id) || Friendship.find_by_red_id_and_blue_id(user2_id, user1_id)
+    Connection.find_by_blue_id_and_red_id(user1_id, user2_id) || Connection.find_by_red_id_and_blue_id(user1_id, user2_id)
   end
 
   def self.query_connections(user)

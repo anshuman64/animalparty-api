@@ -60,25 +60,6 @@ class ApplicationController < ActionController::API
     end
   end
 
-  def get_pusher_message(message, client_id)
-    pusher_message = message.as_json
-    pusher_message[:medium] = message.medium
-
-    message_post = message.post
-    if message_post
-      pusher_message[:post] = message_post.as_json
-      pusher_message[:post][:num_likes] = message_post.likes.count
-      pusher_message[:post][:is_liked_by_client] = message_post.likes.where('user_id = ?', client_id).present?
-
-      pusher_message[:post][:num_flags] = message_post.flags.count
-      pusher_message[:post][:is_flagged_by_client] = message_post.flags.where('user_id = ?', client_id).present?
-
-      pusher_message[:post][:media] = message_post.media
-    end
-
-    return pusher_message
-  end
-
   def get_message_notification_preview(message)
     if message.body
       message_preview = message.body

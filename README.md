@@ -9,7 +9,8 @@ Add the following lines:
 ````
 export ANIMALPARTY_ONE_SIGNAL_APP_ID="Ask Anshuman for the key"
 export ANIMALPARTY_ONE_SIGNAL_AUTH_KEY="Ask Anshuman for the key"
-export ANIMALPARTY_ANIMALPARTY_PUSHER_KEY="Ask Anshuman for the key"
+export ANIMALPARTY_PUSHER_APP_ID="Ask Anshuman for the key"
+export ANIMALPARTY_PUSHER_KEY="Ask Anshuman for the key"
 export ANIMALPARTY_PUSHER_SECRET="Ask Anshuman for the key"
 ````
 

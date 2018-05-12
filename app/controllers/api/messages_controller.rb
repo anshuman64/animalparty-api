@@ -40,8 +40,9 @@ class Api::MessagesController < ApplicationController
         end
       end
 
-      # pusher_message = get_pusher_message(@message, @client.id)
-      # Pusher.trigger('private-' + params[:user_id].to_s, 'receive-message', { client_id:  @client.id, message: pusher_message })
+      pusher_message = @message.as_json
+      pusher_message[:medium] = @message.medium
+      Pusher.trigger('private-' + params[:user_id].to_s, 'receive-message', { client_id:  @client.id, message: pusher_message })
 
       # create_notification(@client.id, params[:user_id], { en: @client[:username] }, get_message_notification_preview(@message), { type: 'receive-message', client_id: @client.id })
 
