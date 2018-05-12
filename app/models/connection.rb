@@ -5,7 +5,7 @@ class Connection < ApplicationRecord
   belongs_to(:blue, class_name: :User, foreign_key: :blue_id, primary_key: :id)
   belongs_to(:red,  class_name: :User, foreign_key: :red_id,  primary_key: :id)
 
-  # has_many(:messages, class_name: :Message, foreign_key: :connection_id, primary_key: :id, dependent: :destroy)
+  has_many(:messages, class_name: :Message, foreign_key: :connection_id, primary_key: :id, dependent: :destroy)
 
   def self.query_connections(user)
     connections = user.reds_as_blue | user.blues_as_red
