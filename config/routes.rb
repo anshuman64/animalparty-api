@@ -16,11 +16,6 @@ Rails.application.routes.draw do
     post   'connections',              to: 'connections#request_connection'
     # del    'connections',              to: 'connections#delete_connection'
 
-    # 'Blocks' routes
-    get    'blocks',                   to: 'blocks#get_blocked_users'
-    post   'blocks',                   to: 'blocks#create_block'
-    delete 'blocks/:blockee_id',       to: 'blocks#destroy_block'
-
     # 'Messages' routes
     get    'messages/direct/:user_id', to: 'messages#get_direct_messages'
     get    'messages/group/:group_id', to: 'messages#get_group_messages'
