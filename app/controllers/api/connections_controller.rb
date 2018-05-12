@@ -1,4 +1,16 @@
 class Api::ConnectionsController < ApplicationController
+  def get_connections
+    @client, error = decode_token_and_find_user(request.headers['Authorization'])
+
+    if error
+      render json: [error], status: 401 and return
+    end
+
+    @users = Connection.query_connections(@client)
+
+    render 'api/users/index'
+  end
+
   def request_connection
     @client, error = decode_token_and_find_user(request.headers['Authorization'])
 

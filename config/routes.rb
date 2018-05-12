@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
 
     # 'Users' routes
-    get    'connections',              to: 'connections#find_connection'
+    get    'connections',              to: 'connections#get_connections'
     post   'connections',              to: 'connections#request_connection'
     # del    'connections',              to: 'connections#delete_connection'
 
