@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180512002839) do
+ActiveRecord::Schema.define(version: 20180512173527) do
 
   create_table "connections", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "blue_id", null: false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20180512002839) do
   end
 
   create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
-    t.text "body", null: false
+    t.text "body"
     t.integer "author_id", null: false
     t.integer "connection_id", null: false
     t.datetime "created_at", null: false
