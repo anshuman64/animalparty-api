@@ -26,24 +26,24 @@ class Api::ConnectionsController < ApplicationController
     end
 
     # Find the user from opposite political_party who joined the queue first
-    user = User.where('political_party = ? and queued_at IS NOT NULL and id NOT IN (?) and id NOT IN (?)', opposite_party, client.reds_as_blue.ids, client.blues_as_red.ids).order(:queued_at).last
+    @user = User.where('political_party = ? and queued_at IS NOT NULL', opposite_party).order(:queued_at).last
 
     # If the queue is not empty...
-    if user
+    if @user
       if @client[:political_party] == 'DEMOCRAT'
         blue_id = @client.id
-        red_id  = user.id
+        red_id  = @user.id
       else
         red_id  = @client.id
-        blue_id = user.id
+        blue_id = @user.id
       end
 
       # Create a connection with the user
       connection = Connection.new(({ blue_id: blue_id, red_id: red_id }))
 
       # And remove the user from the queue
-      if connection.save && user.update({ queued_at: nil })
-        Pusher.trigger('private-' + params[:user_id].to_s, 'receive-connection', { client:  @client })
+      if connection.save && @user.update({ queued_at: nil })
+        Pusher.trigger('private-' + @user.id.to_s, 'receive-connection', { client: @client, user_id: @user.id })
 
         render 'api/users/show' and return
       else
@@ -52,10 +52,30 @@ class Api::ConnectionsController < ApplicationController
     else
       # Add client to the queue
       if @client.update({ queued_at: Time.now })
+        @user = @client
         render 'api/users/show' and return
       else
         render json: @client.errors.full_messages, status: 422 and return
       end
     end
   end
+
+  def destroy_connection
+    client, error = decode_token_and_find_user(request.headers['Authorization'])
+
+    if error
+      render json: [error], status: 401 and return
+    end
+
+    connection = Connection.find_connection(client.id, params[:user_id])
+
+    if connection.destroy
+      Pusher.trigger('private-' + params[:user_id].to_s, 'destroy-connection', { client_id: client.id })
+
+      render json: []
+    else
+      render json: @connection.errors.full_messages, status: 422
+    end
+  end
+
 end

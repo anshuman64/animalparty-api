@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     # 'Users' routes
     get    'connections',              to: 'connections#get_connections'
     post   'connections',              to: 'connections#request_connection'
-    # del    'connections',              to: 'connections#delete_connection'
+    delete 'connections/:user_id',     to: 'connections#destroy_connection'
 
     # 'Messages' routes
     get    'messages/direct/:user_id', to: 'messages#get_direct_messages'

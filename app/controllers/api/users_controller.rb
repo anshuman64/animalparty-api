@@ -7,6 +7,7 @@ class Api::UsersController < ApplicationController
     end
 
     if @client.touch(:last_login)
+
       render 'api/users/show'
     else
       render json: @client.errors.full_messages, status: 422 and return
@@ -54,6 +55,6 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:phone_number, :email, :political_party)
+    params.permit(:phone_number, :email, :political_party, :queued_at)
   end
 end
