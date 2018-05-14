@@ -26,7 +26,9 @@ class Api::ConnectionsController < ApplicationController
     end
 
     # Find the user from opposite political_party who joined the queue first
-    @user = User.where('political_party = ? and queued_at IS NOT NULL', opposite_party).order(:queued_at).last
+    used_ids = @client.blues_as_red.ids + @client.reds_as_blue.ids
+    used_ids = [0] if used_ids.empty?
+    @user = User.where('id NOT IN (?) and political_party = ? and queued_at IS NOT NULL', used_ids, opposite_party).order(:queued_at).last
 
     # If the queue is not empty...
     if @user
@@ -60,7 +62,7 @@ class Api::ConnectionsController < ApplicationController
     end
   end
 
-  def destroy_connection
+  def block_connection
     client, error = decode_token_and_find_user(request.headers['Authorization'])
 
     if error
@@ -69,8 +71,8 @@ class Api::ConnectionsController < ApplicationController
 
     connection = Connection.find_connection(client.id, params[:user_id])
 
-    if connection.destroy
-      Pusher.trigger('private-' + params[:user_id].to_s, 'destroy-connection', { client_id: client.id })
+    if connection.update({ is_blocked: true })
+      Pusher.trigger('private-' + params[:user_id].to_s, 'block-connection', { client_id: client.id })
 
       render json: []
     else
