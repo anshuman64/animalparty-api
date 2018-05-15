@@ -28,6 +28,10 @@ class Api::MessagesController < ApplicationController
       render json: ['Connection not found'], status: 404 and return
     end
 
+    if connection.is_blocked
+      render json: ['User has been blocked'], status: 404 and return
+    end
+
     @message = Message.new({ author_id: @client.id, body: params[:body], connection_id: connection.id })
 
     if @message.save
