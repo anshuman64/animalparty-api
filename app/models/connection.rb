@@ -20,7 +20,7 @@ class Connection < ApplicationRecord
 
   private
 
-  #TODO make this work
+  # TODO: make this work
   def self.sort_connections_by_recent_messages(connections)
     connections.sort_by! do |connection|
       last_message = connection.messages.last

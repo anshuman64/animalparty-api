@@ -7,7 +7,6 @@ class Api::UsersController < ApplicationController
     end
 
     if @client.touch(:last_login)
-
       render 'api/users/show'
     else
       render json: @client.errors.full_messages, status: 422 and return

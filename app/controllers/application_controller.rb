@@ -35,7 +35,6 @@ class ApplicationController < ActionController::API
     end
   end
 
-  # TODO: make this better for group messaging
   def create_notification(client_id, recipient_id, recipient_party, title, message, data)
     params = {
       app_id: ENV["ANIMALPARTY_ONE_SIGNAL_APP_ID"],
