@@ -44,7 +44,7 @@ class Api::MessagesController < ApplicationController
       pusher_message[:medium] = @message.medium
       Pusher.trigger('private-' + params[:user_id].to_s, 'receive-message', { client_id:  @client.id, message: pusher_message })
 
-      # create_notification(@client.id, params[:user_id], { en: @client[:username] }, get_message_notification_preview(@message), { type: 'receive-message', client_id: @client.id })
+      create_notification(@client.id, params[:user_id], @client.political_party, { en: get_username(@client) }, get_message_notification_preview(@message), { type: 'receive-message', client_id: @client.id })
 
       render 'api/messages/show'
     else

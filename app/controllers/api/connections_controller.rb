@@ -46,6 +46,7 @@ class Api::ConnectionsController < ApplicationController
       # And remove the user from the queue
       if connection.save && @user.update({ queued_at: nil })
         Pusher.trigger('private-' + @user.id.to_s, 'receive-connection', { client: @client, user_id: @user.id })
+        create_notification(@client.id, @user.id, @client.political_party, { en: get_username(@client) }, 'You have been matched!', { type: 'receive-connection' })
 
         render 'api/users/show' and return
       else
