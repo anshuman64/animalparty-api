@@ -15,13 +15,13 @@ class Connection < ApplicationRecord
   def self.query_connections(user)
     connections = user.reds_as_blue | user.blues_as_red
 
-    sort_connections_by_recent_messages(user.id, connections)
+    sort_connections_by_recent_messages(connections)
   end
 
   private
 
   #TODO make this work
-  def self.sort_connections_by_recent_messages(user_id, connections)
+  def self.sort_connections_by_recent_messages(connections)
     connections.sort_by! do |connection|
       last_message = connection.messages.last
 

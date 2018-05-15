@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20180514225948) do
     t.string "political_party"
     t.string "firebase_uid", null: false
     t.boolean "is_banned", default: false, null: false
-    t.datetime "last_login", default: "2018-05-11 23:37:36", null: false
+    t.datetime "last_login", default: "2018-05-15 00:26:55", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "queued_at"
