@@ -15,23 +15,23 @@ class Connection < ApplicationRecord
   def self.query_connections(user)
     connections = user.reds_as_blue | user.blues_as_red
 
-    # sort_connections_by_recent_messages(user.id, connections)
+    sort_connections_by_recent_messages(connections)
   end
 
   private
 
-  # def self.sort_connections_by_recent_messages(user_id, connections)
-  #   connections.sort_by! do |connection|
-  #     connectionship = Connection.find_connection(user_id, connection.id)
-  #
-  #     last_message = connectionship.messages.last
-  #     if last_message
-  #       last_message.created_at
-  #     else
-  #       connectionship.created_at
-  #     end
-  #   end
-  #
-  #   connections.reverse
-  # end
+  # TODO: make this work
+  def self.sort_connections_by_recent_messages(connections)
+    connections.sort_by! do |connection|
+      last_message = connection.messages.last
+
+      if last_message
+        last_message.created_at
+      else
+        connection.created_at
+      end
+    end
+
+    connections.reverse
+  end
 end

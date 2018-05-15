@@ -54,6 +54,6 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:phone_number, :email, :political_party)
+    params.permit(:phone_number, :email, :political_party, :queued_at)
   end
 end

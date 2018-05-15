@@ -10,16 +10,13 @@ Rails.application.routes.draw do
     post   'users',                    to: 'users#create_user'
     put    'users',                    to: 'users#edit_user'
 
-
-    # 'Users' routes
+    # 'Connections' routes
     get    'connections',              to: 'connections#get_connections'
     post   'connections',              to: 'connections#request_connection'
-    # del    'connections',              to: 'connections#delete_connection'
+    delete 'connections/:user_id',     to: 'connections#block_connection'
 
     # 'Messages' routes
     get    'messages/direct/:user_id', to: 'messages#get_direct_messages'
-    get    'messages/group/:group_id', to: 'messages#get_group_messages'
     post   'messages/direct',          to: 'messages#create_direct_message'
-    post   'messages/group',           to: 'messages#create_group_message'
   end
 end

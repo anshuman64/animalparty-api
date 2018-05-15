@@ -16,7 +16,7 @@ export ANIMALPARTY_PUSHER_SECRET="Ask Anshuman for the key"
 
 ## Release
 ### Quick Release
-0. Uncomment all "Debug Test" code (Twilio SMS and OneSignal push notifications)!
+0. Uncomment all "Debug Test" code (ie. OneSignal push notifications)!
 1. Make sure all code is COMMITTED to current branch
 1. Run command:
 ````
