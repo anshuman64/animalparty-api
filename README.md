@@ -20,11 +20,11 @@ export ANIMALPARTY_PUSHER_SECRET="Ask Anshuman for the key"
 1. Make sure all code is COMMITTED to current branch
 1. Run command:
 ````
-eb deploy animalparty-production-server-1
+eb deploy animalparty-production-server
 ````
 
 ### Full Release
-0. Uncomment all "Debug Test" code (Twilio SMS and OneSignal push notifications)!
+0. Uncomment all "Debug Test" code (OneSignal push notifications)!
 1. Log into AWS Console: https://console.aws.amazon.com/
 2. Click "Services" > "Compute" > "Elastic Beanstalk"
 3. Click "animalparty-production-server-1" or "animalparty-production-server-2"
