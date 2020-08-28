@@ -1,4 +1,17 @@
+# Animal Party!
+Animal Party! is a chat app that connects members of opposite U.S. political parties.
+
+* Choose your political leaning: Democrat or Republican
+* Get paired with someone from the opposite party
+* Message each other in an anonymous, one-on-one chat room
+* Leave conversations or join other ones whenever you want
+
+Animal Party! was developed for Android & iOS in 2018 by Anshuman Dewangan and Vinit Parikh. The code is free for everyone to view, reuse, and evolve. If you do use the code in your own projects, attribution to Anshuman & Vinit would be appreciated. 
+
+![Alt](AnimalParty-Screenshots.png)
+
 # animalparty-api
+Repository for Animal Party's back-end using Ruby on Rails. **Also see [animalparty-mobile](https://github.com/anshuman64/animalparty-mobile).**
 
 ## Setup
 1. Open .bash_profile (create the file if it does not exist).
@@ -7,11 +20,11 @@ open ~/.bash_profile
 ````
 Add the following lines:
 ````
-export ANIMALPARTY_ONE_SIGNAL_APP_ID="Ask Anshuman for the key"
-export ANIMALPARTY_ONE_SIGNAL_AUTH_KEY="Ask Anshuman for the key"
-export ANIMALPARTY_PUSHER_APP_ID="Ask Anshuman for the key"
-export ANIMALPARTY_PUSHER_KEY="Ask Anshuman for the key"
-export ANIMALPARTY_PUSHER_SECRET="Ask Anshuman for the key"
+export ANIMALPARTY_ONE_SIGNAL_APP_ID="Ask anshuman64 for the key"
+export ANIMALPARTY_ONE_SIGNAL_AUTH_KEY="Ask anshuman64 for the key"
+export ANIMALPARTY_PUSHER_APP_ID="Ask anshuman64 for the key"
+export ANIMALPARTY_PUSHER_KEY="Ask anshuman64 for the key"
+export ANIMALPARTY_PUSHER_SECRET="Ask anshuman64 for the key"
 ````
 
 ## Release
